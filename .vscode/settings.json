@@ -1,0 +1,13 @@
+{
+    "idf.portWin": "COM4",
+    "idf.customExtraVars": {
+        "IDF_TARGET": "esp32s3"
+    },
+    "idf.openOcdConfigs": [
+        "board/esp32s3-builtin.cfg"
+    ],
+    "idf.flashType": "JTAG",
+    "files.associations": {
+        "ekran 20x4": "cpp"
+    }
+}
