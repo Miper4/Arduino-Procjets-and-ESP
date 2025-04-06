@@ -32,7 +32,6 @@ void setup() {
 
 void loop() {
     static double input;
-    static double cyfra;
     static double wynik;
     static double liczba1;
     static double liczba2;
@@ -557,7 +556,7 @@ void loop() {
                         lcd.setCursor(0, 0); 
                         lcd.print("Wybrano logarytm"); 
                         lcd.setCursor(0, 1); 
-                        lcd.print("Podaj liczbe:"); 
+                        lcd.print("Podaj logarytm:"); 
                         
                         delay(200);
                         
@@ -578,12 +577,41 @@ void loop() {
                         }
                         
                         liczba1 = input; 
-                        input = 0;
-                        wynik = log(liczba1); 
+                        input = 0; 
                         key = 0;
                         isFraction = false;
                         fractionMultiplier = 0.1;
                         
+                        lcd.clear();
+                        lcd.setCursor(0, 1); 
+                        lcd.print("Podaj podstawe:"); 
+                        
+                        delay(200);
+                        
+                        while (key != '#') {
+                            key = keypad.getKey();
+                            if (key >= '0' && key <= '9') {
+                                if (isFraction) {
+                                    input += (key - '0') * fractionMultiplier;
+                                    fractionMultiplier *= 0.1; // Przesuwanie miejsca dziesiętnego
+                                } else {
+                                    input = input * 10 + (key - '0');
+                                }
+                                lcd.setCursor(0, 2);
+                                lcd.print(input);
+                            } else if (key == '*') { // Separator dziesiętny
+                                isFraction = true;
+                            }
+                        }
+                        liczba2 = input; 
+                        input = 0; 
+                        key = 0;
+                        isFraction = false;
+                        fractionMultiplier = 0.1;
+                        wynik = log(liczba1) / log(liczba2);
+                        liczba1 = 0;
+                        liczba2 = 0;
+
                         lcd.clear(); 
                         lcd.setCursor(0, 0); 
                         lcd.print("Wynik:"); 
